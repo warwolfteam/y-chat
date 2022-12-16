@@ -1,0 +1,1 @@
+<view><yuj-u-chat vue-id="8dd740cc-1" userId="{{userId}}" messageList="{{list}}" defaultOptions="{{defaultOptions}}" tagOptions="{{tagOptions}}" data-event-opts="{{[['^onRefresh',[['getNext']]]]}}" bind:onRefresh="__e" bind:__l="__l"></yuj-u-chat></view>
