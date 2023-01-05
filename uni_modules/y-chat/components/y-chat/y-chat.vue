@@ -1,11 +1,11 @@
 <template>
 	<view class="y-wrap" :style="'--bottom-height:' + bottomHeight">
-		<scroll-view 
+		<scroll-view
 			class="y-wrap_message_content"
 			scroll-y
 			:scroll-into-view="scrollToId"
-			:refresher-enabled="useRefresh" 
-			:refresher-threshold="100" 
+			:refresher-enabled="useRefresh"
+			:refresher-threshold="100"
 			:refresher-triggered="triggered"
 			scroll-with-animation
 			refresher-default-style="white"
@@ -23,31 +23,25 @@
 				<view style="text-align: center; padding: 10rpx 0 20rpx;" v-if="item.showTime">
 					{{ item.timeLabel }}
 				</view>
-				<!-- <u-image 
-					width="100rpx"
-					height="100rpx"
-					:errorIcon="errorIcon"
-					:src="item[defaultOptions['avator']]" 
-					radius="10rpx"
-					bgColor="red"
-				></u-image> -->
 				<view>
-					<image
-						:src="item[defaultOptions['avator']] ? item[defaultOptions['avator']] : errorIcon" 
-						class="y-wrap_message_content_box__avator"
-						mode="aspectFill"
-					></image>
+					<u-image
+						width="100rpx"
+						height="100rpx"
+						:src="item[defaultOptions['avator']] || errorIcon"
+						radius="10rpx"
+						bgColor="red"
+					></u-image>
 					<view :class="['y-wrap_message_content_box_msg', { 'y-wrap_message_content_box_my' : item[defaultOptions['userId']] == userId }]">
 						<view :class="['y-wrap_message_content_box_msg__name', { 'y-wrap_message_content_box_msg__my' : item[defaultOptions['userId']] == userId }]">
-							<u-tag 
+							<u-tag
 								v-if="tagOptions[item[defaultOptions['tagLabel']]]"
-								:bgColor="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].bgColor : ''" 
-								:borderColor="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].bgColor : ''" 
+								:bgColor="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].bgColor : ''"
+								:borderColor="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].bgColor : ''"
 								:color="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].color : ''"
-								:text="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].text : ''" 
+								:text="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].text : ''"
 								size="mini"
 							></u-tag>
-							
+
 							<!-- <text>{{ item[defaultOptions['name']] }}</text> -->
 							<text>{{ item[defaultOptions['name']] }}</text>
 						</view>
@@ -56,7 +50,7 @@
 						>
 							<view :style="{ textAlign: item[defaultOptions['userId']] == userId ? 'right' : 'left' }" v-if="item[defaultOptions['message']]">{{ item[defaultOptions['message']] }}</view>
 							<u-image
-								@tap="lookImg(item[defaultOptions['img']])" 
+								@tap="lookImg(item[defaultOptions['img']])"
 								v-if="item[defaultOptions['img']]"
 								:src="item[defaultOptions['img']]"
 								width="40vw"
@@ -78,20 +72,20 @@
 					<u-input v-model="sendVal"></u-input>
 				</view>
 				<view>
-					<u-icon custom-style="padding: 0 10rpx" :size="iconSize" name="star"></u-icon>
+					<!-- <u-icon custom-style="padding: 0 10rpx" :size="iconSize" name="star"></u-icon> -->
 					<!-- #ifndef MP-WEIXIN -->
 						<u-icon
-							customStyle="padding: 0 10rpx;" 
-							:size="iconSize" 
-							name="plus" 
-							@click="showHideBox" 
-							:class="!sendVal ? 'width_to_mini' : 'fade_show'" 
-							v-if="!sendVal" 
+							customStyle="padding: 0 10rpx;"
+							:size="iconSize"
+							name="plus"
+							@click="showHideBox"
+							:class="!sendVal ? 'width_to_mini' : 'fade_show'"
+							v-if="!sendVal"
 						></u-icon>
 						<button
-							style="width:116rpx; 60rpx; padding: 0; text-align: center;" 
-							type="primary" 
-							size="mini" 
+							style="width:116rpx; 60rpx; padding: 0; text-align: center; margin-left: 10rpx;"
+							type="primary"
+							size="mini"
 							:class="sendVal ? 'width_to_large' : 'fade_show'"
 							@click="send"
 							v-else
@@ -100,19 +94,19 @@
 					<!-- #ifdef MP-WEIXIN -->
 						<u-transition :show="!sendVal">
 							<u-icon
-								customStyle="padding: 0 10rpx;" 
-								:size="iconSize" 
-								name="plus" 
-								@click="showHideBox" 
-								v-if="!sendVal" 
+								customStyle="padding: 0 10rpx;"
+								:size="iconSize"
+								name="plus"
+								@click="showHideBox"
+								v-if="!sendVal"
 							></u-icon>
 						</u-transition>
 						<u-transition :show="sendVal">
 						  <button
-							style="width:116rpx; 60rpx; padding: 0; text-align: center;" 
-							type="primary" 
-							size="mini" 
-							v-if="sendVal" 
+							style="width:116rpx; 60rpx; padding: 0; text-align: center; margin-left: 10rpx;"
+							type="primary"
+							size="mini"
+							v-if="sendVal"
 							@click="send"
 						  >发送</button>
 					   </u-transition>
@@ -122,30 +116,23 @@
 			<view class="y-wrap_footer_hide_box" id="hide_box">
 				<view class="y-wrap_footer_hide_box_item" v-for="(item, index) in sheet" :key="index" @click="moreFun(item)">
 					<view class="y-wrap_footer_hide_box_item__btn">
-						<u-icon :size="iconSize" :name="item.icon"></u-icon>
-						<text>{{ item.name }}</text>
-					</view>
-				</view>
-				<!-- <view class="y-wrap_footer_hide_box_item" v-for="(item, index) in sheetList" :key="index">
-
-					<view class="y-wrap_footer_hide_box_item__btn" @click="moreFun(item)">
-						<img v-if="item.img" :src="item.img" style="width: 60rpx;" mode="aspectFill">
+            <u-image v-if="item.img" :src="item.img" width="60rpx" height="60rpx" mode="aspectFill" />
 						<u-icon v-else :size="iconSize" :name="item.icon"></u-icon>
 						<text>{{ item.name }}</text>
 					</view>
-				</view> -->
+				</view>
 			</view>
 		</view>
 	</view>
 </template>
 <script>
-	
+
 	function disposeTime(time){
 		const nowDate = new Date().getTime()
 		const cha = nowDate - time
-		
+
 		const oneDay = 24 * 60 * 60 * 1000
-		
+
 		const timeDate = new Date(time)
 		const timeYear = timeDate.getFullYear()
 		const timeMonth = timeDate.getMonth() + 1
@@ -153,7 +140,7 @@
 		const timeHours = timeDate.getHours()
 		const timeMinutes = timeDate.getMinutes()
 		const timeSeconds = timeDate.getSeconds()
-		
+
 		if(cha < oneDay){
 			return `${repairZero(timeHours)}:${repairZero(timeMinutes)}:${repairZero(timeSeconds)}`
 		}else if(cha >= oneDay && cha < oneDay * 2){
@@ -161,10 +148,11 @@
 		}else if(cha >= 2 * oneDay && cha < oneDay * 7){
 			return '七天内'
 		}else{
+
 			return `${repairZero(timeYear)}-${repairZero(timeMonth)}-${repairZero(timeDay)} ${repairZero(timeHours)}:${repairZero(timeMinutes)}:${repairZero(timeSeconds)}`
 		}
 	}
-	
+
 	function repairZero(num){
 		console.log(num)
 		if(num >= 0 && num < 10){
@@ -173,7 +161,7 @@
 			return num
 		}
 	}
-	
+
 	export default {
 		props: {
 			// 自己的userId => 用于判断自己和别人
@@ -242,7 +230,7 @@
 				default: true
 			},
 			// 是否在点击加号后聊天列表移动到最下方
-			scrollBottomFlag: {
+			useScrollBottom: {
 				type: Boolean,
 				default: true
 			},
@@ -280,7 +268,7 @@
 					if(this.list.length > 0){
 						let addObj = newVal[newVal.length - 1]
 						addObj.showTime = addObj.time - newVal[newVal.length - 2].time >= this.intervalTime
-						addObj.timeLabel = disposeTime(item.time)
+						addObj.timeLabel = disposeTime(newVal[newVal.length - 2].time)
 						this.list.push(addObj)
 					}else{
 						// 是否显示时间
@@ -304,7 +292,7 @@
 					console.log(list,'listHistory')
 					this.list = list
 					// newVal.concat(this.list)
-					
+
 				},
 				immediate: true,
 				deep: true
@@ -319,10 +307,10 @@
 				triggered: true,
 				hideBoxHeight: 0,
 				showBoxHeight: 0,
-				
+
 				defaultSheet: [
 					{
-						img: 'https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhmt4zm5j21hc0xcnhs.jpg',
+						img: '',
 						icon: 'camera',
 						name: '拍摄',
 						default: 'playCamera'
@@ -331,11 +319,10 @@
 						img: '',
 						icon: 'photo',
 						name: '相册',
-						funLabel: 'photo',
 						default: 'playPhoto'
 					}
 				],
-				
+
 				list: []
 			}
 		},
@@ -348,7 +335,7 @@
 				const flag = sheet && sheet.length > 0
 				return flag ? (this.retainSheet ? this.defaultSheet.concat(sheet) : sheet) : this.defaultSheet
 			}
-		},	
+		},
 		methods: {
 			// 下拉刷新被触发
 			onRefresh(){
@@ -367,15 +354,15 @@
 			},
 			scrollBottom(){
 				this.scrollToId = 'y-chat-' + this.list[this.list.length - 2][this.defaultOptions.msgId]
-				console.log(this.scrollToId, 'id1')
+				// console.log(this.scrollToId, 'id1')
 				setTimeout(() => {
 					this.scrollToId = 'y-chat-' + this.list[this.list.length - 1][this.defaultOptions.msgId]
-					console.log(this.scrollToId, 'id2')
+					// console.log(this.scrollToId, 'id2')
 				})
 			},
 			showHideBox(){
 				this.footerFlag = !this.footerFlag
-				if(this.footerFlag && this.scrollBottomFlag){
+				if(this.footerFlag && this.useScrollBottom){
 					setTimeout(() => {
 						this.scrollBottom()
 					},500)
@@ -510,16 +497,10 @@
 				justify-content: flex-start;
 				align-items: flex-start;
 			}
-			&__avator{
-				width: 100rpx;
-				height: 100rpx;
-				border-radius: 10rpx;
-				background-color: red;
-			}
 			&_msg {
 				max-width: 40vw;
-				display: flex; 
-				flex-direction: column; 
+				display: flex;
+				flex-direction: column;
 				align-items: flex-start;
 				padding: 0 20rpx;
 				&__name {
@@ -533,7 +514,7 @@
 						padding: 0 10px;
 					}
 				}
-				
+
 				&__my {
 					flex-direction: row-reverse;
 				}
@@ -567,14 +548,14 @@
 				border-left-color: #3a9af6;
 			}
 		}
-		
+
 		&_my {
 			& > view:last-child {
 				flex-direction: row-reverse;
 			}
 		}
 	}
-	
+
 	&_footer {
 		width: 100%;
 		background-color: #fff;
@@ -584,22 +565,22 @@
 			height: 140rpx;
 			display: flex;
 			align-items: center;
-			
+
 			&__ipt {
 				flex: 1;
 			}
 			.fade_show {
 				animation: fade_show .3s linear;
 			}
-			
+
 			.width_to_mini {
 				animation: width_animate_mini .3s linear;
 			}
-			
+
 			.width_to_large {
 				animation: width_animate_large .3s linear;
 			}
-			
+
 			view:last-child{
 				display: flex;
 			}
@@ -624,5 +605,5 @@
 	}
 }
 
-	
+
 </style>

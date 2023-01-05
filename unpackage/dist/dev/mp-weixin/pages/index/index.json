@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "uni-app",
-  "usingComponents": {
-    "y-chat": "/uni_modules/y-chat/components/y-chat/y-chat"
-  }
-}

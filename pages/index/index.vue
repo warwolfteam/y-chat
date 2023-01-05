@@ -1,15 +1,15 @@
 <template>
 	<view>
-		<y-chat 
+		<y-chat
 			:userId="userId"
-			:messageList="list" 
+			:messageList="list"
 			:historyList="historyList"
 			:defaultOptions="defaultOptions"
 			:tagOptions="tagOptions"
 			:sheetList="sheetList"
 			@onRefresh="getNext"
-			@playPhoto="photo"	
-			@playCamera="camera"	
+			@playPhoto="photo"
+			@playCamera="camera"
 			@send="send"
 		></y-chat>
 	</view>
@@ -161,7 +161,7 @@
 					{
 						userId: 1,
 						id: 15,
-						name: '黑',
+						name: '白',
 						message: 'cc11c',
 						time: new Date().getTime(),
 						avator:'',
@@ -170,13 +170,12 @@
 				],
 				historyList:[],
 				sheetList: [
-						{
-							img: '',
-							icon: 'photo',
-							name: '相册',
-							funLabel: 'photo',
-						},
-					]
+				  {
+					img: '',
+					icon: 'red-packet-fill',
+					name: '红包'
+				  }
+				]
 			}
 		},
 		onLoad() {
@@ -238,7 +237,7 @@
 					{
 						userId: 1,
 						id: ++this.list[this.list.length - 1].id + 10, // id必须是唯一值
-						name: '黑',
+						name: '白',
 						message: val,
 						avator: 'https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhmt4zm5j21hc0xcnhs.jpg',
 						tagLabel: 1
