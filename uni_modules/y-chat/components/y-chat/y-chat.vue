@@ -18,44 +18,57 @@
 				v-for="(item, index) in list"
 				:key="index"
 				:id="'y-chat-' + item[defaultOptions['msgId']]"
-				class="y-wrap_message_content_box"
-				:class="{ 'y-wrap_message_content_my' : item[defaultOptions['userId']] == userId }"
+				:class="['y-wrap_message_content_box', { 'y-wrap_message_content_my' : item[defaultOptions['userId']] == userId }]"
 			>
-				<image 
-					class="y-wrap_message_content_box__avator" 
-					:src="item[defaultOptions['avator']]" 
-				></image> 
-				<view class="y-wrap_message_content_box_msg">
-					<view class="y-wrap_message_content_box_msg__name" :class="{ 'y-wrap_message_content_box_msg__my' : item[defaultOptions['userId']] == userId }">
-						<u-tag 
-							v-if="tagOptions[item[defaultOptions['tagLabel']]]"
-							:bgColor="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].color : ''" 
-							:borderColor="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].color : ''" 
-							:text="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].text : ''" 
-							size="mini"
-						></u-tag>
-						
-						<!-- <text>{{ item[defaultOptions['name']] }}</text> -->
-						<text>{{ item[defaultOptions['name']] }}</text>
-					</view>
-					<view
-						class="y-wrap_message_content_box__val"
-						:class="{ 'y-wrap_message_content_box__my' : item[defaultOptions['userId']] == userId }"
-					>
-						<view :style="{ textAlign: item[defaultOptions['userId']] == userId ? 'right' : 'left' }" v-if="item[defaultOptions['message']]">{{ item[defaultOptions['message']] }}</view>
-						
-						<image 
-							@tap="lookImg(item[defaultOptions['img']])" 
-							v-if="item[defaultOptions['img']]"
-							:src="item[defaultOptions['img']]"
-							class="y-wrap_message_content_box__img"
-							mode="widthFix"
-						></image>
-					</view>
+				<view style="text-align: center; padding: 10rpx 0 20rpx;" v-if="item.showTime">
+					{{ item.timeLabel }}
 				</view>
-				<!-- <view class="y_message_content_box_read">
-					{{item[defaultOptions['read']]?'已读':'未读'}}
-				</view> -->
+				<!-- <u-image 
+					width="100rpx"
+					height="100rpx"
+					:errorIcon="errorIcon"
+					:src="item[defaultOptions['avator']]" 
+					radius="10rpx"
+					bgColor="red"
+				></u-image> -->
+				<view>
+					<image
+						:src="item[defaultOptions['avator']] ? item[defaultOptions['avator']] : errorIcon" 
+						class="y-wrap_message_content_box__avator"
+						mode="aspectFill"
+					></image>
+					<view :class="['y-wrap_message_content_box_msg', { 'y-wrap_message_content_box_my' : item[defaultOptions['userId']] == userId }]">
+						<view :class="['y-wrap_message_content_box_msg__name', { 'y-wrap_message_content_box_msg__my' : item[defaultOptions['userId']] == userId }]">
+							<u-tag 
+								v-if="tagOptions[item[defaultOptions['tagLabel']]]"
+								:bgColor="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].bgColor : ''" 
+								:borderColor="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].bgColor : ''" 
+								:color="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].color : ''"
+								:text="tagOptions[item[defaultOptions['tagLabel']]] ? tagOptions[item[defaultOptions['tagLabel']]].text : ''" 
+								size="mini"
+							></u-tag>
+							
+							<!-- <text>{{ item[defaultOptions['name']] }}</text> -->
+							<text>{{ item[defaultOptions['name']] }}</text>
+						</view>
+						<view
+							:class="['y-wrap_message_content_box__val', { 'y-wrap_message_content_box__my' : item[defaultOptions['userId']] == userId }]"
+						>
+							<view :style="{ textAlign: item[defaultOptions['userId']] == userId ? 'right' : 'left' }" v-if="item[defaultOptions['message']]">{{ item[defaultOptions['message']] }}</view>
+							<u-image
+								@tap="lookImg(item[defaultOptions['img']])" 
+								v-if="item[defaultOptions['img']]"
+								:src="item[defaultOptions['img']]"
+								width="40vw"
+								height="auto"
+								mode="widthFix"
+							></u-image>
+						</view>
+					</view>
+					<!-- <view class="y_message_content_box_read">
+						{{item[defaultOptions['read']]?'已读':'未读'}}
+					</view> -->
+				</view>
 			</view>
 		</scroll-view>
 		<view class="y-wrap_footer">
@@ -80,6 +93,7 @@
 							type="primary" 
 							size="mini" 
 							:class="sendVal ? 'width_to_large' : 'fade_show'"
+							@click="send"
 							v-else
 						>发送</button>
 					<!-- #endif -->
@@ -106,31 +120,71 @@
 				</view>
 			</view>
 			<view class="y-wrap_footer_hide_box" id="hide_box">
-				<view class="y-wrap_footer_hide_box_item">
+				<view class="y-wrap_footer_hide_box_item" v-for="(item, index) in sheet" :key="index" @click="moreFun(item)">
 					<view class="y-wrap_footer_hide_box_item__btn">
-						<u-icon :size="iconSize" name="camera"></u-icon>
-						<text>拍摄</text>
+						<u-icon :size="iconSize" :name="item.icon"></u-icon>
+						<text>{{ item.name }}</text>
 					</view>
 				</view>
-				<view class="y-wrap_footer_hide_box_item" v-for="(item, index) in sheetList" :key="index">
-					<!-- <image src="" mode=""></image> -->
-					<view class="y-wrap_footer_hide_box_item__btn" @click="item.conductFun ? item.conductFun : moreFun(item)">
+				<!-- <view class="y-wrap_footer_hide_box_item" v-for="(item, index) in sheetList" :key="index">
+
+					<view class="y-wrap_footer_hide_box_item__btn" @click="moreFun(item)">
 						<img v-if="item.img" :src="item.img" style="width: 60rpx;" mode="aspectFill">
 						<u-icon v-else :size="iconSize" :name="item.icon"></u-icon>
 						<text>{{ item.name }}</text>
 					</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 	</view>
 </template>
 <script>
+	
+	function disposeTime(time){
+		const nowDate = new Date().getTime()
+		const cha = nowDate - time
+		
+		const oneDay = 24 * 60 * 60 * 1000
+		
+		const timeDate = new Date(time)
+		const timeYear = timeDate.getFullYear()
+		const timeMonth = timeDate.getMonth() + 1
+		const timeDay = timeDate.getDate()
+		const timeHours = timeDate.getHours()
+		const timeMinutes = timeDate.getMinutes()
+		const timeSeconds = timeDate.getSeconds()
+		
+		if(cha < oneDay){
+			return `${repairZero(timeHours)}:${repairZero(timeMinutes)}:${repairZero(timeSeconds)}`
+		}else if(cha >= oneDay && cha < oneDay * 2){
+			return '两天内'
+		}else if(cha >= 2 * oneDay && cha < oneDay * 7){
+			return '七天内'
+		}else{
+			return `${repairZero(timeYear)}-${repairZero(timeMonth)}-${repairZero(timeDay)} ${repairZero(timeHours)}:${repairZero(timeMinutes)}:${repairZero(timeSeconds)}`
+		}
+	}
+	
+	function repairZero(num){
+		console.log(num)
+		if(num >= 0 && num < 10){
+			return '0' + num
+		}else{
+			return num
+		}
+	}
+	
 	export default {
 		props: {
 			// 自己的userId => 用于判断自己和别人
 			userId: {
 				type: String | Number,
 				default: ''
+			},
+			// 历史消息
+			historyList: {
+				type: Array,
+				default:() => []
 			},
 			// 消息列表
 			messageList: {
@@ -154,7 +208,6 @@
 						img: 'img',
 						time: 'time',
 						avator: 'avator',
-						tagColor: 'tagColor',
 						tagLabel: 'tagLabel'
 					}
 				)
@@ -171,60 +224,91 @@
 			},
 			// 自定义功能列表
 			sheetList: {
-				type: Array | Object,
+				type: Array,
 				default: () => {
 					return [
 						// {
-						// 	img: 'https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhmt4zm5j21hc0xcnhs.jpg',
-						// 	icon: 'camera',
-						// 	name: '拍摄',
-						// 	funLabel: 'camera',
-						// 	// conductFun: () => {}
+						// 	img: '',
+						// 	icon: 'photo',
+						// 	name: '相册',
+						// 	funLabel: 'photo',
 						// },
 					]
 				}
+			},
+			// 是否保留默认自定义功能
+			retainSheet: {
+				type: Boolean,
+				default: true
 			},
 			// 是否在点击加号后聊天列表移动到最下方
 			scrollBottomFlag: {
 				type: Boolean,
 				default: true
+			},
+			// 显示时间的间隔	单位/毫秒
+			intervalTime: {
+				type: Number,
+				default: 300000
+			},
+			// 默认头像
+			errorIcon: {
+				type: String,
+				default: 'https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhmt4zm5j21hc0xcnhs.jpg'
 			}
 		},
 		watch: {
 			sheetList: {
 				handler:function(){
-					// #ifndef MP-WEIXIN
-						this.$nextTick(() => {
-							const query = uni.createSelectorQuery().in(this);
-							let showBox = query.select('#show_box')
-							let hideBox = query.select('#hide_box')
-							hideBox.boundingClientRect((res) => {
-								this.hideBoxHeight = res.height
-							}).exec()
-							showBox.boundingClientRect((res) => {
-								console.log(res,'res')
-								this.showBoxHeight = res.height
-								console.log(this.showBoxHeight,'asdasd')
-							}).exec()
-						})
-					// #endif
-					// #ifdef MP-WEIXIN
-						wx.nextTick(() => {
-							const query = uni.createSelectorQuery().in(this);
-							let showBox = query.select('#show_box')
-							let hideBox = query.select('#hide_box')
-							hideBox.boundingClientRect((res) => {
-								this.hideBoxHeight = res.height
-							}).exec()
-							showBox.boundingClientRect((res) => {
-								this.showBoxHeight = res.height
-							}).exec()
-						})
-					// #endif
+					setTimeout(() => {
+						const query = uni.createSelectorQuery().in(this);
+						let showBox = query.select('#show_box')
+						let hideBox = query.select('#hide_box')
+						hideBox.boundingClientRect((res) => {
+							this.hideBoxHeight = res.height
+						}).exec()
+						showBox.boundingClientRect((res) => {
+							this.showBoxHeight = res.height
+						}).exec()
+					})
 				},
 				immediate: true,
 				deep: true
 			},
+			messageList: {
+				handler:function(newVal, oldVal){
+					if(this.list.length > 0){
+						let addObj = newVal[newVal.length - 1]
+						addObj.showTime = addObj.time - newVal[newVal.length - 2].time >= this.intervalTime
+						addObj.timeLabel = disposeTime(item.time)
+						this.list.push(addObj)
+					}else{
+						// 是否显示时间
+						newVal.map((item, index) => {
+							item.showTime = index == 0 ? true : item.time - newVal[index - 1].time >= this.intervalTime
+							item.timeLabel = disposeTime(item.time)
+						})
+						this.list = newVal
+					}
+				},
+				immediate: true,
+				deep: true
+			},
+			historyList: {
+				handler:function(newVal, oldVal){
+					newVal.map((item, index) => {
+						item.showTime = index == 0 ? true : item.time - newVal[index - 1].time >= this.intervalTime
+						item.timeLabel = disposeTime(item.time)
+					})
+					let list = newVal.concat(this.list)
+					console.log(list,'listHistory')
+					this.list = list
+					// newVal.concat(this.list)
+					
+				},
+				immediate: true,
+				deep: true
+			}
 		},
 		data(){
 			return {
@@ -234,32 +318,42 @@
 				freshing: false,
 				triggered: true,
 				hideBoxHeight: 0,
-				showBoxHeight: 0
+				showBoxHeight: 0,
+				
+				defaultSheet: [
+					{
+						img: 'https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhmt4zm5j21hc0xcnhs.jpg',
+						icon: 'camera',
+						name: '拍摄',
+						default: 'playCamera'
+					},
+					{
+						img: '',
+						icon: 'photo',
+						name: '相册',
+						funLabel: 'photo',
+						default: 'playPhoto'
+					}
+				],
+				
+				list: []
 			}
 		},
 		computed: {
 			bottomHeight(){
 				return this.footerFlag ? (this.hideBoxHeight + this.showBoxHeight + 'px') : this.showBoxHeight + 'px'
 			},
-			list(){
-				const list = this.messageList
-				if(list && list.length > 0){
-					list.map((item, index) => {
-						if(index == 0) {
-							item.showTime = true
-						}else{
-							item.showTime = item.createTime - list[index - 1].createTime >= 5 * 60
-						}
-					})
-				}
-				return list
+			sheet(){
+				let sheet = this.sheetList
+				const flag = sheet && sheet.length > 0
+				return flag ? (this.retainSheet ? this.defaultSheet.concat(sheet) : sheet) : this.defaultSheet
 			}
 		},	
 		methods: {
 			// 下拉刷新被触发
 			onRefresh(){
 				if (this.freshing) return;
-				const stop =  () => {
+				const stop = () => {
 					this.triggered = false
 					this.freshing = false
 				}
@@ -272,9 +366,11 @@
 				// this.$emit('onReset')
 			},
 			scrollBottom(){
-				this.scrollToId = 'y-chat-' + this.messageList[this.messageList.length - 2][this.defaultOptions.msgId]
+				this.scrollToId = 'y-chat-' + this.list[this.list.length - 2][this.defaultOptions.msgId]
+				console.log(this.scrollToId, 'id1')
 				setTimeout(() => {
-					this.scrollToId = 'y-chat-' + this.messageList[this.messageList.length - 1][this.defaultOptions.msgId]
+					this.scrollToId = 'y-chat-' + this.list[this.list.length - 1][this.defaultOptions.msgId]
+					console.log(this.scrollToId, 'id2')
 				})
 			},
 			showHideBox(){
@@ -307,10 +403,34 @@
 				})
 			},
 			moreFun(item){
-				this.$emit(item.funLabel,item)
+				item.default ? this[item.default]() : this.$emit(item.funLabel,item)
+			},
+			playCamera(){
+				uni.chooseVideo({
+					success(res){
+						console.log(res)
+						this.$emit('playCamera', res)
+					},
+					fail(err) {
+						console.log(err,'err')
+					}
+				})
+			},
+			playPhoto(){
+				uni.chooseImage({
+					success:(res) => {
+						console.log(res,'imgRes')
+						this.$emit('playPhoto', res)
+					},
+					fail:(err) => {
+						console.log(err,'imgErr')
+					}
+				})
 			},
 			send(){
 				this.$emit('send',this.sendVal)
+				this.sendVal = ''
+				this.scrollBottom()
 			}
 		}
 	}
@@ -383,30 +503,33 @@
 		height: calc(100% - var(--bottom-height));
 		transition: height 0.5s;
 		&_box{
-			display: flex;
-			justify-content: flex-start;
-			align-items: flex-start;
 			padding: 10rpx 30rpx;
 			height: auto;
+			& > view:last-child{
+				display: flex;
+				justify-content: flex-start;
+				align-items: flex-start;
+			}
 			&__avator{
-				width: 80rpx;
-				height: 80rpx;
+				width: 100rpx;
+				height: 100rpx;
 				border-radius: 10rpx;
 				background-color: red;
-				padding-top: 10rpx;
 			}
 			&_msg {
 				max-width: 40vw;
 				display: flex; 
 				flex-direction: column; 
-				padding: 0 15rpx;
+				align-items: flex-start;
+				padding: 0 20rpx;
 				&__name {
 					// padding: 0 10px 5px;
-					padding-bottom: 5px;
+					padding-bottom: 10rpx;
+					height: 56rpx;
 					font-size: 24rpx;
 					display: flex;
 					align-items: center;
-					text {
+					& > text {
 						padding: 0 10px;
 					}
 				}
@@ -415,6 +538,9 @@
 					flex-direction: row-reverse;
 				}
 			}
+			&_my {
+				align-items: flex-end;
+			}
 			&__val {
 				background-color: #fff;
 				display: flex;
@@ -422,7 +548,6 @@
 				align-items: center;
 				flex-wrap: wrap;
 				padding: 15rpx;
-				margin-left: 15rpx;
 				border-radius: 10rpx;
 				position: relative;
 			}
@@ -444,7 +569,9 @@
 		}
 		
 		&_my {
-			flex-direction: row-reverse;
+			& > view:last-child {
+				flex-direction: row-reverse;
+			}
 		}
 	}
 	

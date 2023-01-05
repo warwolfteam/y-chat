@@ -1,18 +1,25 @@
 <template>
 	<view>
-		<!-- <cola-u-chat :userId="userId" :messageData="list"></cola-u-chat> -->
-		<y-u-chat 
+		<y-chat 
 			:userId="userId"
 			:messageList="list" 
+			:historyList="historyList"
 			:defaultOptions="defaultOptions"
 			:tagOptions="tagOptions"
+			:sheetList="sheetList"
 			@onRefresh="getNext"
-			@camera="camera"
-		></y-u-chat>
+			@playPhoto="photo"	
+			@playCamera="camera"	
+			@send="send"
+		></y-chat>
 	</view>
 </template>
 
 <script>
+	// 用来获取随机id的, 正式项目不需要
+	function getRandomNum(){
+		return Math.floor(Math.random() * 100).toString() + Math.floor(Math.random() * 100).toString()
+	}
 	export default {
 		data() {
 			return {
@@ -20,7 +27,8 @@
 				tagOptions: {
 					1:{
 						text: '管理员',
-						color: '#ff2321'
+						bgColor: '#ff4100',
+						color: '#fff'
 					},
 				},
 				defaultOptions: {
@@ -31,8 +39,6 @@
 					img: 'img',
 					time: 'time',
 					avator: 'avator',
-					label: 'label',
-					tagColor: 'tagColor',
 					tagLabel: 'tagLabel'
 				},
 				list: [
@@ -41,6 +47,7 @@
 						id: 1,
 						name: '白',
 						message: 'ddd',
+						time: new Date().getTime(),
 						avator: '',
 						img: 'https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhmt4zm5j21hc0xcnhs.jpg'
 					},
@@ -49,14 +56,17 @@
 						id: 2,
 						name: '黑',
 						message: 'aaa',
+						time: new Date().getTime(),
 						avator: '',
-						img: require('@/static/ces.png')
+						img: require('@/static/ces.png'),
+						tagLabel: 1
 					},
 					{
 						userId: 2,
 						id: 3,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -64,6 +74,7 @@
 						id: 4,
 						name: '黑',
 						message: 'aaa',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -71,6 +82,7 @@
 						id: 5,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -78,6 +90,7 @@
 						id: 6,
 						name: '黑',
 						message: 'aaa',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -85,6 +98,7 @@
 						id: 7,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -92,6 +106,7 @@
 						id: 8,
 						name: '黑',
 						message: 'aaa',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -99,6 +114,7 @@
 						id: 9,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -106,6 +122,7 @@
 						id: 10,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -113,6 +130,7 @@
 						id: 11,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -120,6 +138,7 @@
 						id: 12,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -127,6 +146,7 @@
 						id: 13,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:''
 					},
 					{
@@ -134,6 +154,7 @@
 						id: 14,
 						name: '黑',
 						message: 'ccc',
+						time: new Date().getTime(),
 						avator:'',
 						// tagColor: '#000',
 					},
@@ -142,10 +163,20 @@
 						id: 15,
 						name: '黑',
 						message: 'cc11c',
+						time: new Date().getTime(),
 						avator:'',
 						tagLabel: 1
 					}
-				]
+				],
+				historyList:[],
+				sheetList: [
+						{
+							img: '',
+							icon: 'photo',
+							name: '相册',
+							funLabel: 'photo',
+						},
+					]
 			}
 		},
 		onLoad() {
@@ -154,43 +185,65 @@
 			getNext(stop){
 				// 请求接口 || ... 之后调用stop方法停止动画
 				setTimeout(() => {
+					this.getList()
 					stop()
-					const list = [
-						{
-							userId: 1,
-							id: 16,
-							name: '黑',
-							message: 'cc121c',
-							avator:'',
-						},
-						{
-							userId: 1,
-							id: 17,
-							name: '黑',
-							message: 'cc121c',
-							avator:'',
-						},
-						{
-							userId: 1,
-							id: 18,
-							name: '黑',
-							message: 'cc121c',
-							avator:'',
-						},
-						{
-							userId: 1,
-							id: 19,
-							name: '黑',
-							message: 'cc121c',
-							avator: '',
-							tagLabel: 1
-						}
-					]
-					list.map(item => this.list.unshift(item))
-				}, 3000)
+				}, 100)
 			},
-			camera(e){
-				console.log(e,'ee')
+			getList(){
+				// 假设list是获取到的历史消息
+				const list = [
+					{
+						userId: 1,
+						id: getRandomNum(), //不重复id
+						name: '黑',
+						message: 'cc121c',
+						time: new Date().getTime(),
+						avator:'',
+					},
+					{
+						userId: 1,
+						id: getRandomNum(),
+						name: '黑',
+						message: 'cc121c',
+						time: new Date().getTime(),
+						avator:'',
+					},
+					{
+						userId: 1,
+						id: getRandomNum(),
+						name: '黑',
+						message: 'cc121c',
+						avator:'',
+					},
+					{
+						userId: 1,
+						id: getRandomNum(),
+						name: '黑',
+						message: 'cc121c',
+						time: new Date().getTime(),
+						avator: '',
+						tagLabel: 1
+					}
+				]
+				this.historyList = list
+			},
+			playPhoto(file){
+				console.log(file,'file')
+			},
+			playCamera(file){
+				console.log(file,'file')
+			},
+			send(val){
+				this.list.push(
+					{
+						userId: 1,
+						id: ++this.list[this.list.length - 1].id + 10, // id必须是唯一值
+						name: '黑',
+						message: val,
+						avator: 'https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhmt4zm5j21hc0xcnhs.jpg',
+						tagLabel: 1
+					}
+				)
 			}
 		}
 	}

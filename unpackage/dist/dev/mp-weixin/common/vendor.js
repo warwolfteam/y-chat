@@ -732,8 +732,8 @@ function populateParameters(result) {
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "3.6.13",
-    uniRuntimeVersion: "3.6.13",
+    uniCompileVersion: "3.6.15",
+    uniRuntimeVersion: "3.6.15",
     uniPlatform: undefined || "mp-weixin",
     deviceBrand: deviceBrand,
     deviceModel: model,
@@ -9538,16 +9538,16 @@ var _mixin = _interopRequireDefault(__webpack_require__(/*! ./libs/mixin/mixin.j
 var _mpMixin = _interopRequireDefault(__webpack_require__(/*! ./libs/mixin/mpMixin.js */ 34));
 var _luchRequest = _interopRequireDefault(__webpack_require__(/*! ./libs/luch-request */ 35));
 var _route = _interopRequireDefault(__webpack_require__(/*! ./libs/util/route.js */ 53));
-var _colorGradient = _interopRequireDefault(__webpack_require__(/*! ./libs/function/colorGradient.js */ 54));
-var _test = _interopRequireDefault(__webpack_require__(/*! ./libs/function/test.js */ 55));
-var _debounce = _interopRequireDefault(__webpack_require__(/*! ./libs/function/debounce.js */ 56));
-var _throttle = _interopRequireDefault(__webpack_require__(/*! ./libs/function/throttle.js */ 57));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./libs/function/index.js */ 58));
-var _config = _interopRequireDefault(__webpack_require__(/*! ./libs/config/config.js */ 61));
-var _props = _interopRequireDefault(__webpack_require__(/*! ./libs/config/props.js */ 62));
-var _zIndex = _interopRequireDefault(__webpack_require__(/*! ./libs/config/zIndex.js */ 152));
-var _color = _interopRequireDefault(__webpack_require__(/*! ./libs/config/color.js */ 110));
-var _platform = _interopRequireDefault(__webpack_require__(/*! ./libs/function/platform */ 153));
+var _colorGradient = _interopRequireDefault(__webpack_require__(/*! ./libs/function/colorGradient.js */ 57));
+var _test = _interopRequireDefault(__webpack_require__(/*! ./libs/function/test.js */ 58));
+var _debounce = _interopRequireDefault(__webpack_require__(/*! ./libs/function/debounce.js */ 59));
+var _throttle = _interopRequireDefault(__webpack_require__(/*! ./libs/function/throttle.js */ 60));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./libs/function/index.js */ 61));
+var _config = _interopRequireDefault(__webpack_require__(/*! ./libs/config/config.js */ 64));
+var _props = _interopRequireDefault(__webpack_require__(/*! ./libs/config/props.js */ 65));
+var _zIndex = _interopRequireDefault(__webpack_require__(/*! ./libs/config/zIndex.js */ 155));
+var _color = _interopRequireDefault(__webpack_require__(/*! ./libs/config/color.js */ 113));
+var _platform = _interopRequireDefault(__webpack_require__(/*! ./libs/function/platform */ 156));
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 // 看到此报错，是因为没有配置vue.config.js的【transpileDependencies】，详见：https://www.uviewui.com/components/npmSetting.html#_5-cli模式额外配置
@@ -12981,6 +12981,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 54));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 56));
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ 22));
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ 23));
 /**
@@ -13039,44 +13041,74 @@ var Router = /*#__PURE__*/function () {
     // 对外的方法名称
   }, {
     key: "route",
-    value: async function route() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      // 合并用户的配置和内部的默认配置
-      var mergeConfig = {};
-      if (typeof options === 'string') {
-        // 如果options为字符串，则为route(url, params)的形式
-        mergeConfig.url = this.mixinParam(options, params);
-        mergeConfig.type = 'navigateTo';
-      } else {
-        mergeConfig = uni.$u.deepMerge(options, this.config);
-        // 否则正常使用mergeConfig中的url和params进行拼接
-        mergeConfig.url = this.mixinParam(options.url, options.params);
-      }
+    value: function () {
+      var _route = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+        var options,
+          params,
+          mergeConfig,
+          isNext,
+          _args = arguments;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                options = _args.length > 0 && _args[0] !== undefined ? _args[0] : {};
+                params = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+                // 合并用户的配置和内部的默认配置
+                mergeConfig = {};
+                if (typeof options === 'string') {
+                  // 如果options为字符串，则为route(url, params)的形式
+                  mergeConfig.url = this.mixinParam(options, params);
+                  mergeConfig.type = 'navigateTo';
+                } else {
+                  mergeConfig = uni.$u.deepMerge(options, this.config);
+                  // 否则正常使用mergeConfig中的url和params进行拼接
+                  mergeConfig.url = this.mixinParam(options.url, options.params);
+                }
 
-      // 如果本次跳转的路径和本页面路径一致，不执行跳转，防止用户快速点击跳转按钮，造成多次跳转同一个页面的问题
-      if (mergeConfig.url === uni.$u.page()) return;
-      if (params.intercept) {
-        this.config.intercept = params.intercept;
+                // 如果本次跳转的路径和本页面路径一致，不执行跳转，防止用户快速点击跳转按钮，造成多次跳转同一个页面的问题
+                if (!(mergeConfig.url === uni.$u.page())) {
+                  _context.next = 6;
+                  break;
+                }
+                return _context.abrupt("return");
+              case 6:
+                if (params.intercept) {
+                  this.config.intercept = params.intercept;
+                }
+                // params参数也带给拦截器
+                mergeConfig.params = params;
+                // 合并内外部参数
+                mergeConfig = uni.$u.deepMerge(this.config, mergeConfig);
+                // 判断用户是否定义了拦截器
+                if (!(typeof uni.$u.routeIntercept === 'function')) {
+                  _context.next = 16;
+                  break;
+                }
+                _context.next = 12;
+                return new Promise(function (resolve, reject) {
+                  uni.$u.routeIntercept(mergeConfig, resolve);
+                });
+              case 12:
+                isNext = _context.sent;
+                // 如果isNext为true，则执行路由跳转
+                isNext && this.openPage(mergeConfig);
+                _context.next = 17;
+                break;
+              case 16:
+                this.openPage(mergeConfig);
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+      function route() {
+        return _route.apply(this, arguments);
       }
-      // params参数也带给拦截器
-      mergeConfig.params = params;
-      // 合并内外部参数
-      mergeConfig = uni.$u.deepMerge(this.config, mergeConfig);
-      // 判断用户是否定义了拦截器
-      if (typeof uni.$u.routeIntercept === 'function') {
-        // 定一个promise，根据用户执行resolve(true)或者resolve(false)来决定是否进行路由跳转
-        var isNext = await new Promise(function (resolve, reject) {
-          uni.$u.routeIntercept(mergeConfig, resolve);
-        });
-        // 如果isNext为true，则执行路由跳转
-        isNext && this.openPage(mergeConfig);
-      } else {
-        this.openPage(mergeConfig);
-      }
-    }
-
-    // 执行路由跳转
+      return route;
+    }() // 执行路由跳转
   }, {
     key: "openPage",
     value: function openPage(config) {
@@ -13123,6 +13155,380 @@ exports.default = _default;
 
 /***/ }),
 /* 54 */
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/@babel/runtime/regenerator/index.js ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// TODO(Babel 8): Remove this file.
+
+var runtime = __webpack_require__(/*! @babel/runtime/helpers/regeneratorRuntime */ 55)();
+module.exports = runtime;
+
+/***/ }),
+/* 55 */
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/regeneratorRuntime.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(/*! ./typeof.js */ 12)["default"];
+function _regeneratorRuntime() {
+  "use strict";
+
+  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
+    return exports;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
+  var exports = {},
+    Op = Object.prototype,
+    hasOwn = Op.hasOwnProperty,
+    defineProperty = Object.defineProperty || function (obj, key, desc) {
+      obj[key] = desc.value;
+    },
+    $Symbol = "function" == typeof Symbol ? Symbol : {},
+    iteratorSymbol = $Symbol.iterator || "@@iterator",
+    asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
+    toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+  function define(obj, key, value) {
+    return Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: !0,
+      configurable: !0,
+      writable: !0
+    }), obj[key];
+  }
+  try {
+    define({}, "");
+  } catch (err) {
+    define = function define(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
+      generator = Object.create(protoGenerator.prototype),
+      context = new Context(tryLocsList || []);
+    return defineProperty(generator, "_invoke", {
+      value: makeInvokeMethod(innerFn, self, context)
+    }), generator;
+  }
+  function tryCatch(fn, obj, arg) {
+    try {
+      return {
+        type: "normal",
+        arg: fn.call(obj, arg)
+      };
+    } catch (err) {
+      return {
+        type: "throw",
+        arg: err
+      };
+    }
+  }
+  exports.wrap = wrap;
+  var ContinueSentinel = {};
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+  var IteratorPrototype = {};
+  define(IteratorPrototype, iteratorSymbol, function () {
+    return this;
+  });
+  var getProto = Object.getPrototypeOf,
+    NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
+  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function (method) {
+      define(prototype, method, function (arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if ("throw" !== record.type) {
+        var result = record.arg,
+          value = result.value;
+        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
+          invoke("next", value, resolve, reject);
+        }, function (err) {
+          invoke("throw", err, resolve, reject);
+        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
+          result.value = unwrapped, resolve(result);
+        }, function (error) {
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+      reject(record.arg);
+    }
+    var previousPromise;
+    defineProperty(this, "_invoke", {
+      value: function value(method, arg) {
+        function callInvokeWithMethodAndArg() {
+          return new PromiseImpl(function (resolve, reject) {
+            invoke(method, arg, resolve, reject);
+          });
+        }
+        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+      }
+    });
+  }
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = "suspendedStart";
+    return function (method, arg) {
+      if ("executing" === state) throw new Error("Generator is already running");
+      if ("completed" === state) {
+        if ("throw" === method) throw arg;
+        return doneResult();
+      }
+      for (context.method = method, context.arg = arg;;) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+          if ("suspendedStart" === state) throw state = "completed", context.arg;
+          context.dispatchException(context.arg);
+        } else "return" === context.method && context.abrupt("return", context.arg);
+        state = "executing";
+        var record = tryCatch(innerFn, self, context);
+        if ("normal" === record.type) {
+          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+          return {
+            value: record.arg,
+            done: context.done
+          };
+        }
+        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+      }
+    };
+  }
+  function maybeInvokeDelegate(delegate, context) {
+    var methodName = context.method,
+      method = delegate.iterator[methodName];
+    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
+    var record = tryCatch(method, delegate.iterator, context.arg);
+    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
+    var info = record.arg;
+    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
+  }
+  function pushTryEntry(locs) {
+    var entry = {
+      tryLoc: locs[0]
+    };
+    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
+  }
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal", delete record.arg, entry.completion = record;
+  }
+  function Context(tryLocsList) {
+    this.tryEntries = [{
+      tryLoc: "root"
+    }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0);
+  }
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) return iteratorMethod.call(iterable);
+      if ("function" == typeof iterable.next) return iterable;
+      if (!isNaN(iterable.length)) {
+        var i = -1,
+          next = function next() {
+            for (; ++i < iterable.length;) {
+              if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
+            }
+            return next.value = undefined, next.done = !0, next;
+          };
+        return next.next = next;
+      }
+    }
+    return {
+      next: doneResult
+    };
+  }
+  function doneResult() {
+    return {
+      value: undefined,
+      done: !0
+    };
+  }
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
+    value: GeneratorFunctionPrototype,
+    configurable: !0
+  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
+    value: GeneratorFunction,
+    configurable: !0
+  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+    var ctor = "function" == typeof genFun && genFun.constructor;
+    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
+  }, exports.mark = function (genFun) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun;
+  }, exports.awrap = function (arg) {
+    return {
+      __await: arg
+    };
+  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+    return this;
+  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    void 0 === PromiseImpl && (PromiseImpl = Promise);
+    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
+      return result.done ? result.value : iter.next();
+    });
+  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+    return this;
+  }), define(Gp, "toString", function () {
+    return "[object Generator]";
+  }), exports.keys = function (val) {
+    var object = Object(val),
+      keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    return keys.reverse(), function next() {
+      for (; keys.length;) {
+        var key = keys.pop();
+        if (key in object) return next.value = key, next.done = !1, next;
+      }
+      return next.done = !0, next;
+    };
+  }, exports.values = values, Context.prototype = {
+    constructor: Context,
+    reset: function reset(skipTempReset) {
+      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) {
+        "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
+      }
+    },
+    stop: function stop() {
+      this.done = !0;
+      var rootRecord = this.tryEntries[0].completion;
+      if ("throw" === rootRecord.type) throw rootRecord.arg;
+      return this.rval;
+    },
+    dispatchException: function dispatchException(exception) {
+      if (this.done) throw exception;
+      var context = this;
+      function handle(loc, caught) {
+        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
+      }
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i],
+          record = entry.completion;
+        if ("root" === entry.tryLoc) return handle("end");
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc"),
+            hasFinally = hasOwn.call(entry, "finallyLoc");
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+          } else {
+            if (!hasFinally) throw new Error("try statement without catch or finally");
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          }
+        }
+      }
+    },
+    abrupt: function abrupt(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
+      var record = finallyEntry ? finallyEntry.completion : {};
+      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
+    },
+    complete: function complete(record, afterLoc) {
+      if ("throw" === record.type) throw record.arg;
+      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
+    },
+    finish: function finish(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
+      }
+    },
+    "catch": function _catch(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if ("throw" === record.type) {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+      throw new Error("illegal catch attempt");
+    },
+    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
+      return this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
+    }
+  }, exports;
+}
+module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+/* 56 */
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+      args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+      _next(undefined);
+    });
+  };
+}
+module.exports = _asyncToGenerator, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+/* 57 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/function/colorGradient.js ***!
   \*********************************************************************************/
@@ -13277,7 +13683,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 55 */
+/* 58 */
 /*!************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/function/test.js ***!
   \************************************************************************/
@@ -13582,7 +13988,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 56 */
+/* 59 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/function/debounce.js ***!
   \****************************************************************************/
@@ -13629,7 +14035,7 @@ var _default = debounce;
 exports.default = _default;
 
 /***/ }),
-/* 57 */
+/* 60 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/function/throttle.js ***!
   \****************************************************************************/
@@ -13678,7 +14084,7 @@ var _default = throttle;
 exports.default = _default;
 
 /***/ }),
-/* 58 */
+/* 61 */
 /*!*************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/function/index.js ***!
   \*************************************************************************/
@@ -13695,8 +14101,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ 4));
 var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ 12));
-var _test = _interopRequireDefault(__webpack_require__(/*! ./test.js */ 55));
-var _digit = __webpack_require__(/*! ./digit.js */ 59);
+var _test = _interopRequireDefault(__webpack_require__(/*! ./test.js */ 58));
+var _digit = __webpack_require__(/*! ./digit.js */ 62);
 /**
  * @description 如果value小于min，取min；如果value大于max，取max
  * @param {number} min 
@@ -14439,7 +14845,7 @@ exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 59 */
+/* 62 */
 /*!*************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/function/digit.js ***!
   \*************************************************************************/
@@ -14460,7 +14866,7 @@ exports.minus = minus;
 exports.plus = plus;
 exports.round = round;
 exports.times = times;
-var _toArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toArray */ 60));
+var _toArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toArray */ 63));
 var _boundaryCheckingState = true; // 是否进行越界检查的全局开关
 
 /**
@@ -14641,7 +15047,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 60 */
+/* 63 */
 /*!********************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/toArray.js ***!
   \********************************************************/
@@ -14658,7 +15064,7 @@ function _toArray(arr) {
 module.exports = _toArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 61 */
+/* 64 */
 /*!************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/config.js ***!
   \************************************************************************/
@@ -14702,7 +15108,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 62 */
+/* 65 */
 /*!***********************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props.js ***!
   \***********************************************************************/
@@ -14718,95 +15124,95 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 10));
-var _config = _interopRequireDefault(__webpack_require__(/*! ./config */ 61));
-var _actionSheet = _interopRequireDefault(__webpack_require__(/*! ./props/actionSheet.js */ 63));
-var _album = _interopRequireDefault(__webpack_require__(/*! ./props/album.js */ 64));
-var _alert = _interopRequireDefault(__webpack_require__(/*! ./props/alert.js */ 65));
-var _avatar = _interopRequireDefault(__webpack_require__(/*! ./props/avatar */ 66));
-var _avatarGroup = _interopRequireDefault(__webpack_require__(/*! ./props/avatarGroup */ 67));
-var _backtop = _interopRequireDefault(__webpack_require__(/*! ./props/backtop */ 68));
-var _badge = _interopRequireDefault(__webpack_require__(/*! ./props/badge */ 69));
-var _button = _interopRequireDefault(__webpack_require__(/*! ./props/button */ 70));
-var _calendar = _interopRequireDefault(__webpack_require__(/*! ./props/calendar */ 71));
-var _carKeyboard = _interopRequireDefault(__webpack_require__(/*! ./props/carKeyboard */ 72));
-var _cell = _interopRequireDefault(__webpack_require__(/*! ./props/cell */ 73));
-var _cellGroup = _interopRequireDefault(__webpack_require__(/*! ./props/cellGroup */ 74));
-var _checkbox = _interopRequireDefault(__webpack_require__(/*! ./props/checkbox */ 75));
-var _checkboxGroup = _interopRequireDefault(__webpack_require__(/*! ./props/checkboxGroup */ 76));
-var _circleProgress = _interopRequireDefault(__webpack_require__(/*! ./props/circleProgress */ 77));
-var _code = _interopRequireDefault(__webpack_require__(/*! ./props/code */ 78));
-var _codeInput = _interopRequireDefault(__webpack_require__(/*! ./props/codeInput */ 79));
-var _col = _interopRequireDefault(__webpack_require__(/*! ./props/col */ 80));
-var _collapse = _interopRequireDefault(__webpack_require__(/*! ./props/collapse */ 81));
-var _collapseItem = _interopRequireDefault(__webpack_require__(/*! ./props/collapseItem */ 82));
-var _columnNotice = _interopRequireDefault(__webpack_require__(/*! ./props/columnNotice */ 83));
-var _countDown = _interopRequireDefault(__webpack_require__(/*! ./props/countDown */ 84));
-var _countTo = _interopRequireDefault(__webpack_require__(/*! ./props/countTo */ 85));
-var _datetimePicker = _interopRequireDefault(__webpack_require__(/*! ./props/datetimePicker */ 86));
-var _divider = _interopRequireDefault(__webpack_require__(/*! ./props/divider */ 87));
-var _empty = _interopRequireDefault(__webpack_require__(/*! ./props/empty */ 88));
-var _form = _interopRequireDefault(__webpack_require__(/*! ./props/form */ 89));
-var _formItem = _interopRequireDefault(__webpack_require__(/*! ./props/formItem */ 90));
-var _gap = _interopRequireDefault(__webpack_require__(/*! ./props/gap */ 91));
-var _grid = _interopRequireDefault(__webpack_require__(/*! ./props/grid */ 92));
-var _gridItem = _interopRequireDefault(__webpack_require__(/*! ./props/gridItem */ 93));
-var _icon = _interopRequireDefault(__webpack_require__(/*! ./props/icon */ 94));
-var _image = _interopRequireDefault(__webpack_require__(/*! ./props/image */ 95));
-var _indexAnchor = _interopRequireDefault(__webpack_require__(/*! ./props/indexAnchor */ 96));
-var _indexList = _interopRequireDefault(__webpack_require__(/*! ./props/indexList */ 97));
-var _input = _interopRequireDefault(__webpack_require__(/*! ./props/input */ 98));
-var _keyboard = _interopRequireDefault(__webpack_require__(/*! ./props/keyboard */ 99));
-var _line = _interopRequireDefault(__webpack_require__(/*! ./props/line */ 100));
-var _lineProgress = _interopRequireDefault(__webpack_require__(/*! ./props/lineProgress */ 101));
-var _link = _interopRequireDefault(__webpack_require__(/*! ./props/link */ 102));
-var _list = _interopRequireDefault(__webpack_require__(/*! ./props/list */ 103));
-var _listItem = _interopRequireDefault(__webpack_require__(/*! ./props/listItem */ 104));
-var _loadingIcon = _interopRequireDefault(__webpack_require__(/*! ./props/loadingIcon */ 105));
-var _loadingPage = _interopRequireDefault(__webpack_require__(/*! ./props/loadingPage */ 106));
-var _loadmore = _interopRequireDefault(__webpack_require__(/*! ./props/loadmore */ 107));
-var _modal = _interopRequireDefault(__webpack_require__(/*! ./props/modal */ 108));
-var _navbar = _interopRequireDefault(__webpack_require__(/*! ./props/navbar */ 109));
-var _noNetwork = _interopRequireDefault(__webpack_require__(/*! ./props/noNetwork */ 111));
-var _noticeBar = _interopRequireDefault(__webpack_require__(/*! ./props/noticeBar */ 112));
-var _notify = _interopRequireDefault(__webpack_require__(/*! ./props/notify */ 113));
-var _numberBox = _interopRequireDefault(__webpack_require__(/*! ./props/numberBox */ 114));
-var _numberKeyboard = _interopRequireDefault(__webpack_require__(/*! ./props/numberKeyboard */ 115));
-var _overlay = _interopRequireDefault(__webpack_require__(/*! ./props/overlay */ 116));
-var _parse = _interopRequireDefault(__webpack_require__(/*! ./props/parse */ 117));
-var _picker = _interopRequireDefault(__webpack_require__(/*! ./props/picker */ 118));
-var _popup = _interopRequireDefault(__webpack_require__(/*! ./props/popup */ 119));
-var _radio = _interopRequireDefault(__webpack_require__(/*! ./props/radio */ 120));
-var _radioGroup = _interopRequireDefault(__webpack_require__(/*! ./props/radioGroup */ 121));
-var _rate = _interopRequireDefault(__webpack_require__(/*! ./props/rate */ 122));
-var _readMore = _interopRequireDefault(__webpack_require__(/*! ./props/readMore */ 123));
-var _row = _interopRequireDefault(__webpack_require__(/*! ./props/row */ 124));
-var _rowNotice = _interopRequireDefault(__webpack_require__(/*! ./props/rowNotice */ 125));
-var _scrollList = _interopRequireDefault(__webpack_require__(/*! ./props/scrollList */ 126));
-var _search = _interopRequireDefault(__webpack_require__(/*! ./props/search */ 127));
-var _section = _interopRequireDefault(__webpack_require__(/*! ./props/section */ 128));
-var _skeleton = _interopRequireDefault(__webpack_require__(/*! ./props/skeleton */ 129));
-var _slider = _interopRequireDefault(__webpack_require__(/*! ./props/slider */ 130));
-var _statusBar = _interopRequireDefault(__webpack_require__(/*! ./props/statusBar */ 131));
-var _steps = _interopRequireDefault(__webpack_require__(/*! ./props/steps */ 132));
-var _stepsItem = _interopRequireDefault(__webpack_require__(/*! ./props/stepsItem */ 133));
-var _sticky = _interopRequireDefault(__webpack_require__(/*! ./props/sticky */ 134));
-var _subsection = _interopRequireDefault(__webpack_require__(/*! ./props/subsection */ 135));
-var _swipeAction = _interopRequireDefault(__webpack_require__(/*! ./props/swipeAction */ 136));
-var _swipeActionItem = _interopRequireDefault(__webpack_require__(/*! ./props/swipeActionItem */ 137));
-var _swiper = _interopRequireDefault(__webpack_require__(/*! ./props/swiper */ 138));
-var _swipterIndicator = _interopRequireDefault(__webpack_require__(/*! ./props/swipterIndicator */ 139));
-var _switch2 = _interopRequireDefault(__webpack_require__(/*! ./props/switch */ 140));
-var _tabbar = _interopRequireDefault(__webpack_require__(/*! ./props/tabbar */ 141));
-var _tabbarItem = _interopRequireDefault(__webpack_require__(/*! ./props/tabbarItem */ 142));
-var _tabs = _interopRequireDefault(__webpack_require__(/*! ./props/tabs */ 143));
-var _tag = _interopRequireDefault(__webpack_require__(/*! ./props/tag */ 144));
-var _text = _interopRequireDefault(__webpack_require__(/*! ./props/text */ 145));
-var _textarea = _interopRequireDefault(__webpack_require__(/*! ./props/textarea */ 146));
-var _toast = _interopRequireDefault(__webpack_require__(/*! ./props/toast */ 147));
-var _toolbar = _interopRequireDefault(__webpack_require__(/*! ./props/toolbar */ 148));
-var _tooltip = _interopRequireDefault(__webpack_require__(/*! ./props/tooltip */ 149));
-var _transition = _interopRequireDefault(__webpack_require__(/*! ./props/transition */ 150));
-var _upload = _interopRequireDefault(__webpack_require__(/*! ./props/upload */ 151));
+var _config = _interopRequireDefault(__webpack_require__(/*! ./config */ 64));
+var _actionSheet = _interopRequireDefault(__webpack_require__(/*! ./props/actionSheet.js */ 66));
+var _album = _interopRequireDefault(__webpack_require__(/*! ./props/album.js */ 67));
+var _alert = _interopRequireDefault(__webpack_require__(/*! ./props/alert.js */ 68));
+var _avatar = _interopRequireDefault(__webpack_require__(/*! ./props/avatar */ 69));
+var _avatarGroup = _interopRequireDefault(__webpack_require__(/*! ./props/avatarGroup */ 70));
+var _backtop = _interopRequireDefault(__webpack_require__(/*! ./props/backtop */ 71));
+var _badge = _interopRequireDefault(__webpack_require__(/*! ./props/badge */ 72));
+var _button = _interopRequireDefault(__webpack_require__(/*! ./props/button */ 73));
+var _calendar = _interopRequireDefault(__webpack_require__(/*! ./props/calendar */ 74));
+var _carKeyboard = _interopRequireDefault(__webpack_require__(/*! ./props/carKeyboard */ 75));
+var _cell = _interopRequireDefault(__webpack_require__(/*! ./props/cell */ 76));
+var _cellGroup = _interopRequireDefault(__webpack_require__(/*! ./props/cellGroup */ 77));
+var _checkbox = _interopRequireDefault(__webpack_require__(/*! ./props/checkbox */ 78));
+var _checkboxGroup = _interopRequireDefault(__webpack_require__(/*! ./props/checkboxGroup */ 79));
+var _circleProgress = _interopRequireDefault(__webpack_require__(/*! ./props/circleProgress */ 80));
+var _code = _interopRequireDefault(__webpack_require__(/*! ./props/code */ 81));
+var _codeInput = _interopRequireDefault(__webpack_require__(/*! ./props/codeInput */ 82));
+var _col = _interopRequireDefault(__webpack_require__(/*! ./props/col */ 83));
+var _collapse = _interopRequireDefault(__webpack_require__(/*! ./props/collapse */ 84));
+var _collapseItem = _interopRequireDefault(__webpack_require__(/*! ./props/collapseItem */ 85));
+var _columnNotice = _interopRequireDefault(__webpack_require__(/*! ./props/columnNotice */ 86));
+var _countDown = _interopRequireDefault(__webpack_require__(/*! ./props/countDown */ 87));
+var _countTo = _interopRequireDefault(__webpack_require__(/*! ./props/countTo */ 88));
+var _datetimePicker = _interopRequireDefault(__webpack_require__(/*! ./props/datetimePicker */ 89));
+var _divider = _interopRequireDefault(__webpack_require__(/*! ./props/divider */ 90));
+var _empty = _interopRequireDefault(__webpack_require__(/*! ./props/empty */ 91));
+var _form = _interopRequireDefault(__webpack_require__(/*! ./props/form */ 92));
+var _formItem = _interopRequireDefault(__webpack_require__(/*! ./props/formItem */ 93));
+var _gap = _interopRequireDefault(__webpack_require__(/*! ./props/gap */ 94));
+var _grid = _interopRequireDefault(__webpack_require__(/*! ./props/grid */ 95));
+var _gridItem = _interopRequireDefault(__webpack_require__(/*! ./props/gridItem */ 96));
+var _icon = _interopRequireDefault(__webpack_require__(/*! ./props/icon */ 97));
+var _image = _interopRequireDefault(__webpack_require__(/*! ./props/image */ 98));
+var _indexAnchor = _interopRequireDefault(__webpack_require__(/*! ./props/indexAnchor */ 99));
+var _indexList = _interopRequireDefault(__webpack_require__(/*! ./props/indexList */ 100));
+var _input = _interopRequireDefault(__webpack_require__(/*! ./props/input */ 101));
+var _keyboard = _interopRequireDefault(__webpack_require__(/*! ./props/keyboard */ 102));
+var _line = _interopRequireDefault(__webpack_require__(/*! ./props/line */ 103));
+var _lineProgress = _interopRequireDefault(__webpack_require__(/*! ./props/lineProgress */ 104));
+var _link = _interopRequireDefault(__webpack_require__(/*! ./props/link */ 105));
+var _list = _interopRequireDefault(__webpack_require__(/*! ./props/list */ 106));
+var _listItem = _interopRequireDefault(__webpack_require__(/*! ./props/listItem */ 107));
+var _loadingIcon = _interopRequireDefault(__webpack_require__(/*! ./props/loadingIcon */ 108));
+var _loadingPage = _interopRequireDefault(__webpack_require__(/*! ./props/loadingPage */ 109));
+var _loadmore = _interopRequireDefault(__webpack_require__(/*! ./props/loadmore */ 110));
+var _modal = _interopRequireDefault(__webpack_require__(/*! ./props/modal */ 111));
+var _navbar = _interopRequireDefault(__webpack_require__(/*! ./props/navbar */ 112));
+var _noNetwork = _interopRequireDefault(__webpack_require__(/*! ./props/noNetwork */ 114));
+var _noticeBar = _interopRequireDefault(__webpack_require__(/*! ./props/noticeBar */ 115));
+var _notify = _interopRequireDefault(__webpack_require__(/*! ./props/notify */ 116));
+var _numberBox = _interopRequireDefault(__webpack_require__(/*! ./props/numberBox */ 117));
+var _numberKeyboard = _interopRequireDefault(__webpack_require__(/*! ./props/numberKeyboard */ 118));
+var _overlay = _interopRequireDefault(__webpack_require__(/*! ./props/overlay */ 119));
+var _parse = _interopRequireDefault(__webpack_require__(/*! ./props/parse */ 120));
+var _picker = _interopRequireDefault(__webpack_require__(/*! ./props/picker */ 121));
+var _popup = _interopRequireDefault(__webpack_require__(/*! ./props/popup */ 122));
+var _radio = _interopRequireDefault(__webpack_require__(/*! ./props/radio */ 123));
+var _radioGroup = _interopRequireDefault(__webpack_require__(/*! ./props/radioGroup */ 124));
+var _rate = _interopRequireDefault(__webpack_require__(/*! ./props/rate */ 125));
+var _readMore = _interopRequireDefault(__webpack_require__(/*! ./props/readMore */ 126));
+var _row = _interopRequireDefault(__webpack_require__(/*! ./props/row */ 127));
+var _rowNotice = _interopRequireDefault(__webpack_require__(/*! ./props/rowNotice */ 128));
+var _scrollList = _interopRequireDefault(__webpack_require__(/*! ./props/scrollList */ 129));
+var _search = _interopRequireDefault(__webpack_require__(/*! ./props/search */ 130));
+var _section = _interopRequireDefault(__webpack_require__(/*! ./props/section */ 131));
+var _skeleton = _interopRequireDefault(__webpack_require__(/*! ./props/skeleton */ 132));
+var _slider = _interopRequireDefault(__webpack_require__(/*! ./props/slider */ 133));
+var _statusBar = _interopRequireDefault(__webpack_require__(/*! ./props/statusBar */ 134));
+var _steps = _interopRequireDefault(__webpack_require__(/*! ./props/steps */ 135));
+var _stepsItem = _interopRequireDefault(__webpack_require__(/*! ./props/stepsItem */ 136));
+var _sticky = _interopRequireDefault(__webpack_require__(/*! ./props/sticky */ 137));
+var _subsection = _interopRequireDefault(__webpack_require__(/*! ./props/subsection */ 138));
+var _swipeAction = _interopRequireDefault(__webpack_require__(/*! ./props/swipeAction */ 139));
+var _swipeActionItem = _interopRequireDefault(__webpack_require__(/*! ./props/swipeActionItem */ 140));
+var _swiper = _interopRequireDefault(__webpack_require__(/*! ./props/swiper */ 141));
+var _swipterIndicator = _interopRequireDefault(__webpack_require__(/*! ./props/swipterIndicator */ 142));
+var _switch2 = _interopRequireDefault(__webpack_require__(/*! ./props/switch */ 143));
+var _tabbar = _interopRequireDefault(__webpack_require__(/*! ./props/tabbar */ 144));
+var _tabbarItem = _interopRequireDefault(__webpack_require__(/*! ./props/tabbarItem */ 145));
+var _tabs = _interopRequireDefault(__webpack_require__(/*! ./props/tabs */ 146));
+var _tag = _interopRequireDefault(__webpack_require__(/*! ./props/tag */ 147));
+var _text = _interopRequireDefault(__webpack_require__(/*! ./props/text */ 148));
+var _textarea = _interopRequireDefault(__webpack_require__(/*! ./props/textarea */ 149));
+var _toast = _interopRequireDefault(__webpack_require__(/*! ./props/toast */ 150));
+var _toolbar = _interopRequireDefault(__webpack_require__(/*! ./props/toolbar */ 151));
+var _tooltip = _interopRequireDefault(__webpack_require__(/*! ./props/tooltip */ 152));
+var _transition = _interopRequireDefault(__webpack_require__(/*! ./props/transition */ 153));
+var _upload = _interopRequireDefault(__webpack_require__(/*! ./props/upload */ 154));
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var color = _config.default.color;
@@ -14814,7 +15220,7 @@ var _default = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSp
 exports.default = _default;
 
 /***/ }),
-/* 63 */
+/* 66 */
 /*!***********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/actionSheet.js ***!
   \***********************************************************************************/
@@ -14858,7 +15264,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 64 */
+/* 67 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/album.js ***!
   \*****************************************************************************/
@@ -14902,7 +15308,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 65 */
+/* 68 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/alert.js ***!
   \*****************************************************************************/
@@ -14941,7 +15347,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 66 */
+/* 69 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/avatar.js ***!
   \******************************************************************************/
@@ -14986,7 +15392,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 67 */
+/* 70 */
 /*!***********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/avatarGroup.js ***!
   \***********************************************************************************/
@@ -15028,7 +15434,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 68 */
+/* 71 */
 /*!*******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/backtop.js ***!
   \*******************************************************************************/
@@ -15074,7 +15480,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 69 */
+/* 72 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/badge.js ***!
   \*****************************************************************************/
@@ -15120,7 +15526,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 70 */
+/* 73 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/button.js ***!
   \******************************************************************************/
@@ -15179,7 +15585,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 71 */
+/* 74 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/calendar.js ***!
   \********************************************************************************/
@@ -15242,7 +15648,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 72 */
+/* 75 */
 /*!***********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/carKeyboard.js ***!
   \***********************************************************************************/
@@ -15274,7 +15680,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 73 */
+/* 76 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/cell.js ***!
   \****************************************************************************/
@@ -15326,7 +15732,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 74 */
+/* 77 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/cellGroup.js ***!
   \*********************************************************************************/
@@ -15360,7 +15766,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 75 */
+/* 78 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/checkbox.js ***!
   \********************************************************************************/
@@ -15404,7 +15810,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 76 */
+/* 79 */
 /*!*************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/checkboxGroup.js ***!
   \*************************************************************************************/
@@ -15452,7 +15858,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 77 */
+/* 80 */
 /*!**************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/circleProgress.js ***!
   \**************************************************************************************/
@@ -15484,7 +15890,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 78 */
+/* 81 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/code.js ***!
   \****************************************************************************/
@@ -15521,7 +15927,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 79 */
+/* 82 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/codeInput.js ***!
   \*********************************************************************************/
@@ -15567,7 +15973,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 80 */
+/* 83 */
 /*!***************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/col.js ***!
   \***************************************************************************/
@@ -15603,7 +16009,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 81 */
+/* 84 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/collapse.js ***!
   \********************************************************************************/
@@ -15637,7 +16043,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 82 */
+/* 85 */
 /*!************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/collapseItem.js ***!
   \************************************************************************************/
@@ -15679,7 +16085,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 83 */
+/* 86 */
 /*!************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/columnNotice.js ***!
   \************************************************************************************/
@@ -15720,7 +16126,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 84 */
+/* 87 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/countDown.js ***!
   \*********************************************************************************/
@@ -15755,7 +16161,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 85 */
+/* 88 */
 /*!*******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/countTo.js ***!
   \*******************************************************************************/
@@ -15797,7 +16203,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 86 */
+/* 89 */
 /*!**************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/datetimePicker.js ***!
   \**************************************************************************************/
@@ -15852,7 +16258,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 87 */
+/* 90 */
 /*!*******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/divider.js ***!
   \*******************************************************************************/
@@ -15891,7 +16297,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 88 */
+/* 91 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/empty.js ***!
   \*****************************************************************************/
@@ -15933,7 +16339,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 89 */
+/* 92 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/form.js ***!
   \****************************************************************************/
@@ -15978,7 +16384,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 90 */
+/* 93 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/formItem.js ***!
   \********************************************************************************/
@@ -16018,7 +16424,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 91 */
+/* 94 */
 /*!***************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/gap.js ***!
   \***************************************************************************/
@@ -16054,7 +16460,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 92 */
+/* 95 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/grid.js ***!
   \****************************************************************************/
@@ -16088,7 +16494,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 93 */
+/* 96 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/gridItem.js ***!
   \********************************************************************************/
@@ -16121,7 +16527,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 94 */
+/* 97 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/icon.js ***!
   \****************************************************************************/
@@ -16136,7 +16542,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 61));
+var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 64));
 /*
  * @Author       : LQ
  * @Description  :
@@ -16173,7 +16579,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 95 */
+/* 98 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/image.js ***!
   \*****************************************************************************/
@@ -16220,7 +16626,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 96 */
+/* 99 */
 /*!***********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/indexAnchor.js ***!
   \***********************************************************************************/
@@ -16256,7 +16662,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 97 */
+/* 100 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/indexList.js ***!
   \*********************************************************************************/
@@ -16294,7 +16700,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 98 */
+/* 101 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/input.js ***!
   \*****************************************************************************/
@@ -16359,7 +16765,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 99 */
+/* 102 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/keyboard.js ***!
   \********************************************************************************/
@@ -16406,7 +16812,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 100 */
+/* 103 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/line.js ***!
   \****************************************************************************/
@@ -16443,7 +16849,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 101 */
+/* 104 */
 /*!************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/lineProgress.js ***!
   \************************************************************************************/
@@ -16479,7 +16885,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 102 */
+/* 105 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/link.js ***!
   \****************************************************************************/
@@ -16494,7 +16900,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 61));
+var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 64));
 /*
  * @Author       : LQ
  * @Description  :
@@ -16521,7 +16927,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 103 */
+/* 106 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/list.js ***!
   \****************************************************************************/
@@ -16566,7 +16972,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 104 */
+/* 107 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/listItem.js ***!
   \********************************************************************************/
@@ -16598,7 +17004,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 105 */
+/* 108 */
 /*!***********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/loadingIcon.js ***!
   \***********************************************************************************/
@@ -16613,7 +17019,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 61));
+var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 64));
 /*
  * @Author       : LQ
  * @Description  :
@@ -16644,7 +17050,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 106 */
+/* 109 */
 /*!***********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/loadingPage.js ***!
   \***********************************************************************************/
@@ -16684,7 +17090,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 107 */
+/* 110 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/loadmore.js ***!
   \********************************************************************************/
@@ -16733,7 +17139,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 108 */
+/* 111 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/modal.js ***!
   \*****************************************************************************/
@@ -16780,7 +17186,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 109 */
+/* 112 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/navbar.js ***!
   \******************************************************************************/
@@ -16795,7 +17201,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _color = _interopRequireDefault(__webpack_require__(/*! ../color */ 110));
+var _color = _interopRequireDefault(__webpack_require__(/*! ../color */ 113));
 /*
  * @Author       : LQ
  * @Description  :
@@ -16829,7 +17235,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 110 */
+/* 113 */
 /*!***********************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/color.js ***!
   \***********************************************************************/
@@ -16862,7 +17268,7 @@ var _default = color;
 exports.default = _default;
 
 /***/ }),
-/* 111 */
+/* 114 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/noNetwork.js ***!
   \*********************************************************************************/
@@ -16896,7 +17302,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 112 */
+/* 115 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/noticeBar.js ***!
   \*********************************************************************************/
@@ -16942,7 +17348,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 113 */
+/* 116 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/notify.js ***!
   \******************************************************************************/
@@ -16981,7 +17387,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 114 */
+/* 117 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/numberBox.js ***!
   \*********************************************************************************/
@@ -17033,7 +17439,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 115 */
+/* 118 */
 /*!**************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/numberKeyboard.js ***!
   \**************************************************************************************/
@@ -17067,7 +17473,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 116 */
+/* 119 */
 /*!*******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/overlay.js ***!
   \*******************************************************************************/
@@ -17102,7 +17508,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 117 */
+/* 120 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/parse.js ***!
   \*****************************************************************************/
@@ -17141,7 +17547,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 118 */
+/* 121 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/picker.js ***!
   \******************************************************************************/
@@ -17191,7 +17597,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 119 */
+/* 122 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/popup.js ***!
   \*****************************************************************************/
@@ -17237,7 +17643,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 120 */
+/* 123 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/radio.js ***!
   \*****************************************************************************/
@@ -17281,7 +17687,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 121 */
+/* 124 */
 /*!**********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/radioGroup.js ***!
   \**********************************************************************************/
@@ -17328,7 +17734,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 122 */
+/* 125 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/rate.js ***!
   \****************************************************************************/
@@ -17371,7 +17777,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 123 */
+/* 126 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/readMore.js ***!
   \********************************************************************************/
@@ -17410,7 +17816,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 124 */
+/* 127 */
 /*!***************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/row.js ***!
   \***************************************************************************/
@@ -17444,7 +17850,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 125 */
+/* 128 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/rowNotice.js ***!
   \*********************************************************************************/
@@ -17482,7 +17888,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 126 */
+/* 129 */
 /*!**********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/scrollList.js ***!
   \**********************************************************************************/
@@ -17519,7 +17925,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 127 */
+/* 130 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/search.js ***!
   \******************************************************************************/
@@ -17577,7 +17983,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 128 */
+/* 131 */
 /*!*******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/section.js ***!
   \*******************************************************************************/
@@ -17618,7 +18024,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 129 */
+/* 132 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/skeleton.js ***!
   \********************************************************************************/
@@ -17660,7 +18066,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 130 */
+/* 133 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/slider.js ***!
   \******************************************************************************/
@@ -17702,7 +18108,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 131 */
+/* 134 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/statusBar.js ***!
   \*********************************************************************************/
@@ -17734,7 +18140,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 132 */
+/* 135 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/steps.js ***!
   \*****************************************************************************/
@@ -17772,7 +18178,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 133 */
+/* 136 */
 /*!*********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/stepsItem.js ***!
   \*********************************************************************************/
@@ -17807,7 +18213,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 134 */
+/* 137 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/sticky.js ***!
   \******************************************************************************/
@@ -17844,7 +18250,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 135 */
+/* 138 */
 /*!**********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/subsection.js ***!
   \**********************************************************************************/
@@ -17884,7 +18290,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 136 */
+/* 139 */
 /*!***********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/swipeAction.js ***!
   \***********************************************************************************/
@@ -17916,7 +18322,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 137 */
+/* 140 */
 /*!***************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/swipeActionItem.js ***!
   \***************************************************************************************/
@@ -17954,7 +18360,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 138 */
+/* 141 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/swiper.js ***!
   \******************************************************************************/
@@ -18011,7 +18417,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 139 */
+/* 142 */
 /*!****************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/swipterIndicator.js ***!
   \****************************************************************************************/
@@ -18047,7 +18453,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 140 */
+/* 143 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/switch.js ***!
   \******************************************************************************/
@@ -18088,7 +18494,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 141 */
+/* 144 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/tabbar.js ***!
   \******************************************************************************/
@@ -18127,7 +18533,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 142 */
+/* 145 */
 /*!**********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/tabbarItem.js ***!
   \**********************************************************************************/
@@ -18164,7 +18570,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 143 */
+/* 146 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/tabs.js ***!
   \****************************************************************************/
@@ -18221,7 +18627,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 144 */
+/* 147 */
 /*!***************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/tag.js ***!
   \***************************************************************************/
@@ -18267,7 +18673,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 145 */
+/* 148 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/text.js ***!
   \****************************************************************************/
@@ -18323,7 +18729,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 146 */
+/* 149 */
 /*!********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/textarea.js ***!
   \********************************************************************************/
@@ -18376,7 +18782,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 147 */
+/* 150 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/toast.js ***!
   \*****************************************************************************/
@@ -18422,7 +18828,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 148 */
+/* 151 */
 /*!*******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/toolbar.js ***!
   \*******************************************************************************/
@@ -18459,7 +18865,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 149 */
+/* 152 */
 /*!*******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/tooltip.js ***!
   \*******************************************************************************/
@@ -18503,7 +18909,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 150 */
+/* 153 */
 /*!**********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/transition.js ***!
   \**********************************************************************************/
@@ -18538,7 +18944,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 151 */
+/* 154 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/props/upload.js ***!
   \******************************************************************************/
@@ -18597,7 +19003,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 152 */
+/* 155 */
 /*!************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/config/zIndex.js ***!
   \************************************************************************/
@@ -18633,7 +19039,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 153 */
+/* 156 */
 /*!****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/libs/function/platform.js ***!
   \****************************************************************************/
@@ -18663,13 +19069,13 @@ var _default = platform;
 exports.default = _default;
 
 /***/ }),
-/* 154 */,
-/* 155 */,
-/* 156 */,
 /* 157 */,
 /* 158 */,
 /* 159 */,
-/* 160 */
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */
 /*!********************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/static/ces.png ***!
   \********************************************/
@@ -18679,9 +19085,6 @@ exports.default = _default;
 module.exports = "data:image/png;base64,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"
 
 /***/ }),
-/* 161 */,
-/* 162 */,
-/* 163 */,
 /* 164 */,
 /* 165 */,
 /* 166 */,
@@ -18693,7 +19096,226 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaMAAAK8CAYAAABC
 /* 172 */,
 /* 173 */,
 /* 174 */,
-/* 175 */
+/* 175 */,
+/* 176 */
+/*!****************************************************************************!*\
+  !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-tag/props.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 标签类型info、primary、success、warning、error
+    type: {
+      type: String,
+      default: uni.$u.props.tag.type
+    },
+    // 不可用
+    disabled: {
+      type: [Boolean, String],
+      default: uni.$u.props.tag.disabled
+    },
+    // 标签的大小，large，medium，mini
+    size: {
+      type: String,
+      default: uni.$u.props.tag.size
+    },
+    // tag的形状，circle（两边半圆形）, square（方形，带圆角）
+    shape: {
+      type: String,
+      default: uni.$u.props.tag.shape
+    },
+    // 标签文字
+    text: {
+      type: [String, Number],
+      default: uni.$u.props.tag.text
+    },
+    // 背景颜色，默认为空字符串，即不处理
+    bgColor: {
+      type: String,
+      default: uni.$u.props.tag.bgColor
+    },
+    // 标签字体颜色，默认为空字符串，即不处理
+    color: {
+      type: String,
+      default: uni.$u.props.tag.color
+    },
+    // 标签的边框颜色
+    borderColor: {
+      type: String,
+      default: uni.$u.props.tag.borderColor
+    },
+    // 关闭按钮图标的颜色
+    closeColor: {
+      type: String,
+      default: uni.$u.props.tag.closeColor
+    },
+    // 点击时返回的索引值，用于区分例遍的数组哪个元素被点击了
+    name: {
+      type: [String, Number],
+      default: uni.$u.props.tag.name
+    },
+    // // 模式选择，dark|light|plain
+    // mode: {
+    // 	type: String,
+    // 	default: 'light'
+    // },
+    // 镂空时是否填充背景色
+    plainFill: {
+      type: Boolean,
+      default: uni.$u.props.tag.plainFill
+    },
+    // 是否镂空
+    plain: {
+      type: Boolean,
+      default: uni.$u.props.tag.plain
+    },
+    // 是否可关闭
+    closable: {
+      type: Boolean,
+      default: uni.$u.props.tag.closable
+    },
+    // 是否显示
+    show: {
+      type: Boolean,
+      default: uni.$u.props.tag.show
+    },
+    // 内置图标，或绝对路径的图片
+    icon: {
+      type: String,
+      default: uni.$u.props.tag.icon
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */
+/*!******************************************************************************!*\
+  !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-image/props.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 图片地址
+    src: {
+      type: String,
+      default: uni.$u.props.image.src
+    },
+    // 裁剪模式
+    mode: {
+      type: String,
+      default: uni.$u.props.image.mode
+    },
+    // 宽度，单位任意
+    width: {
+      type: [String, Number],
+      default: uni.$u.props.image.width
+    },
+    // 高度，单位任意
+    height: {
+      type: [String, Number],
+      default: uni.$u.props.image.height
+    },
+    // 图片形状，circle-圆形，square-方形
+    shape: {
+      type: String,
+      default: uni.$u.props.image.shape
+    },
+    // 圆角，单位任意
+    radius: {
+      type: [String, Number],
+      default: uni.$u.props.image.radius
+    },
+    // 是否懒加载，微信小程序、App、百度小程序、字节跳动小程序
+    lazyLoad: {
+      type: Boolean,
+      default: uni.$u.props.image.lazyLoad
+    },
+    // 开启长按图片显示识别微信小程序码菜单
+    showMenuByLongpress: {
+      type: Boolean,
+      default: uni.$u.props.image.showMenuByLongpress
+    },
+    // 加载中的图标，或者小图片
+    loadingIcon: {
+      type: String,
+      default: uni.$u.props.image.loadingIcon
+    },
+    // 加载失败的图标，或者小图片
+    errorIcon: {
+      type: String,
+      default: uni.$u.props.image.errorIcon
+    },
+    // 是否显示加载中的图标或者自定义的slot
+    showLoading: {
+      type: Boolean,
+      default: uni.$u.props.image.showLoading
+    },
+    // 是否显示加载错误的图标或者自定义的slot
+    showError: {
+      type: Boolean,
+      default: uni.$u.props.image.showError
+    },
+    // 是否需要淡入效果
+    fade: {
+      type: Boolean,
+      default: uni.$u.props.image.fade
+    },
+    // 只支持网络资源，只对微信小程序有效
+    webp: {
+      type: Boolean,
+      default: uni.$u.props.image.webp
+    },
+    // 过渡时间，单位ms
+    duration: {
+      type: [String, Number],
+      default: uni.$u.props.image.duration
+    },
+    // 背景颜色，用于深色页面加载图片时，为了和背景色融合
+    bgColor: {
+      type: String,
+      default: uni.$u.props.image.bgColor
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-icon/icons.js ***!
   \*****************************************************************************/
@@ -18924,7 +19546,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 176 */
+/* 193 */
 /*!*****************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-icon/props.js ***!
   \*****************************************************************************/
@@ -19031,14 +19653,14 @@ exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */
 /*!******************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-input/props.js ***!
   \******************************************************************************/
@@ -19243,14 +19865,14 @@ exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */
 /*!***********************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-transition/props.js ***!
   \***********************************************************************************/
@@ -19292,7 +19914,7 @@ exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 193 */
+/* 210 */
 /*!****************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-transition/transition.js ***!
   \****************************************************************************************/
@@ -19307,7 +19929,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 194));
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 54));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 56));
+var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 211));
 // 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
 var nextTick = function nextTick() {
   return new Promise(function (resolve) {
@@ -19342,15 +19966,25 @@ var _default = {
       this.inited = true;
       this.display = true;
       this.classes = classNames.enter;
-      this.$nextTick(async function () {
-        // 标识动画尚未结束
-        _this.$emit('enter');
-        _this.transitionEnded = false;
-        // 组件动画进入后触发的事件
-        _this.$emit('afterEnter');
-        // 赋予组件enter-to类名
-        _this.classes = classNames['enter-to'];
-      });
+      this.$nextTick( /*#__PURE__*/(0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                // 标识动画尚未结束
+                _this.$emit('enter');
+                _this.transitionEnded = false;
+                // 组件动画进入后触发的事件
+                _this.$emit('afterEnter');
+                // 赋予组件enter-to类名
+                _this.classes = classNames['enter-to'];
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
     },
     // 动画离场处理
     vueLeave: function vueLeave() {
@@ -19389,7 +20023,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 194 */
+/* 211 */
 /*!******************************************************************************************!*\
   !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-transition/nvue.ani-map.js ***!
   \******************************************************************************************/
@@ -19580,118 +20214,6 @@ var _default = {
   }
 };
 exports.default = _default;
-
-/***/ }),
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */
-/*!****************************************************************************!*\
-  !*** D:/我的项目(练习)/my/cahrts/uni_modules/uview-ui/components/u-tag/props.js ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
-  props: {
-    // 标签类型info、primary、success、warning、error
-    type: {
-      type: String,
-      default: uni.$u.props.tag.type
-    },
-    // 不可用
-    disabled: {
-      type: [Boolean, String],
-      default: uni.$u.props.tag.disabled
-    },
-    // 标签的大小，large，medium，mini
-    size: {
-      type: String,
-      default: uni.$u.props.tag.size
-    },
-    // tag的形状，circle（两边半圆形）, square（方形，带圆角）
-    shape: {
-      type: String,
-      default: uni.$u.props.tag.shape
-    },
-    // 标签文字
-    text: {
-      type: [String, Number],
-      default: uni.$u.props.tag.text
-    },
-    // 背景颜色，默认为空字符串，即不处理
-    bgColor: {
-      type: String,
-      default: uni.$u.props.tag.bgColor
-    },
-    // 标签字体颜色，默认为空字符串，即不处理
-    color: {
-      type: String,
-      default: uni.$u.props.tag.color
-    },
-    // 标签的边框颜色
-    borderColor: {
-      type: String,
-      default: uni.$u.props.tag.borderColor
-    },
-    // 关闭按钮图标的颜色
-    closeColor: {
-      type: String,
-      default: uni.$u.props.tag.closeColor
-    },
-    // 点击时返回的索引值，用于区分例遍的数组哪个元素被点击了
-    name: {
-      type: [String, Number],
-      default: uni.$u.props.tag.name
-    },
-    // // 模式选择，dark|light|plain
-    // mode: {
-    // 	type: String,
-    // 	default: 'light'
-    // },
-    // 镂空时是否填充背景色
-    plainFill: {
-      type: Boolean,
-      default: uni.$u.props.tag.plainFill
-    },
-    // 是否镂空
-    plain: {
-      type: Boolean,
-      default: uni.$u.props.tag.plain
-    },
-    // 是否可关闭
-    closable: {
-      type: Boolean,
-      default: uni.$u.props.tag.closable
-    },
-    // 是否显示
-    show: {
-      type: Boolean,
-      default: uni.$u.props.tag.show
-    },
-    // 内置图标，或绝对路径的图片
-    icon: {
-      type: String,
-      default: uni.$u.props.tag.icon
-    }
-  }
-};
-exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 ]]);
