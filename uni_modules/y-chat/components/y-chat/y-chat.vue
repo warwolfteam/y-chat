@@ -148,13 +148,12 @@
 		}else if(cha >= 2 * oneDay && cha < oneDay * 7){
 			return '七天内'
 		}else{
-
 			return `${repairZero(timeYear)}-${repairZero(timeMonth)}-${repairZero(timeDay)} ${repairZero(timeHours)}:${repairZero(timeMinutes)}:${repairZero(timeSeconds)}`
 		}
 	}
 
 	function repairZero(num){
-		console.log(num)
+		// console.log(num)
 		if(num >= 0 && num < 10){
 			return '0' + num
 		}else{
@@ -353,12 +352,20 @@
 				// this.$emit('onReset')
 			},
 			scrollBottom(){
+				// #ifdef APP-PLUS
+				setTimeout(() => {
+					this.scrollToId = 'y-chat-' + this.list[this.list.length - 1][this.defaultOptions.msgId]
+					// console.log(this.scrollToId, 'id2')
+				},100)
+				// #endif
+				// #ifndef APP-PLUS
 				this.scrollToId = 'y-chat-' + this.list[this.list.length - 2][this.defaultOptions.msgId]
 				// console.log(this.scrollToId, 'id1')
 				setTimeout(() => {
 					this.scrollToId = 'y-chat-' + this.list[this.list.length - 1][this.defaultOptions.msgId]
 					// console.log(this.scrollToId, 'id2')
 				})
+				// #endif
 			},
 			showHideBox(){
 				this.footerFlag = !this.footerFlag

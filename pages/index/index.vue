@@ -8,8 +8,8 @@
 			:tagOptions="tagOptions"
 			:sheetList="sheetList"
 			@onRefresh="getNext"
-			@playPhoto="photo"
-			@playCamera="camera"
+			@playPhoto="playPhoto"
+			@playCamera="playCamera"
 			@send="send"
 		></y-chat>
 	</view>
